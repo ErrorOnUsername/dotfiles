@@ -19,6 +19,7 @@ Plug 'ayu-theme/ayu-vim'
 Plug 'morhetz/gruvbox'
 Plug 'drewtempelmeyer/palenight.vim'
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -30,19 +31,27 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'neovim/nvim-lspconfig'
 Plug 'ms-jpq/coq_nvim'
 
-" Custom archimedes highlighting
-Plug '~/dev/amds/editors/nvim'
+" Custom joy highlighting
+Plug '~/dev/joy/editors/nvim'
+Plug 'Tetralux/odin.vim'
 
 call plug#end()
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
-let g:gruvbox_contrast_dark='hard'
+let g:gruvbox_contrast_dark='dark'
 let g:gruvbox_invert_selection='0'
 let g:gruvbox_material_diagnostic_text_highlight='1'
 let g:gruvbox_material_diagnostic_virtual_text='colored'
 
-colorscheme palenight
+let g:airline_theme='distinguished'
+let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#left_sep = ' '
+" let g:airline#extensions#tabline#left_alt_sep = '|'
+
+" set termguicolors
+
+colorscheme habamax
 
 let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8 } }
 let $FZF_DEFAULT_OPTS='--reverse'
@@ -76,7 +85,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'clangd', 'rust_analyzer' }
+local servers = { 'clangd', 'rust_analyzer', 'ols', 'zls' }
 for _, lsp in ipairs(servers) do
 	nvim_lsp[lsp].setup(coq.lsp_ensure_capabilities({
 		on_attach = on_attach,
@@ -100,6 +109,9 @@ nnoremap <C-h> :wincmd h<CR>
 nnoremap <C-j> :wincmd j<CR>
 nnoremap <C-k> :wincmd k<CR>
 nnoremap <C-l> :wincmd l<CR>
+
+nnoremap <A-h> :bprevious<CR>
+nnoremap <A-l> :bnext<CR>
 
 function! MakeScratchBuffer()
 	vsplit
